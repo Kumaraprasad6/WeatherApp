@@ -49,7 +49,7 @@ class WeatherViewController: UIViewController , CLLocationManagerDelegate , chan
     //Write the getWeatherData method here:
     func getWeatherData(url :String  , parameters: [String : String]){
         
-        Alamofire.request(url, method: .get, parameters : parameters).responseJSON(completionHandler: {
+        Alamofire.request(url, method: .get, parameters : parameters).responseJSON {
             response in
             if response.result.isSuccess{
                 print("Success! Got weather Data")
@@ -61,7 +61,7 @@ class WeatherViewController: UIViewController , CLLocationManagerDelegate , chan
                  print("Error \(response.result.error)")
                 self.cityLabel.text = "Connection Issues"
             }
-            })
+            }
         
     }
     
@@ -150,6 +150,9 @@ class WeatherViewController: UIViewController , CLLocationManagerDelegate , chan
     //Write the userEnteredANewCityName Delegate method here:
     func userEnteredACityName(city : String){
         print(city)
+        let params : [String : String] = ["q" : city, "appid" : APP_ID]
+        
+        getWeatherData(url: WEATHER_URL, parameters: params)
     }
 
     
